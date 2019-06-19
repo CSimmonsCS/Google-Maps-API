@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Google Map</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <style media="screen">
+      #map{
+        height: 400px;
+        width: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">MY GOOGLE MAPS API</h1>
+
+    <div id="map">
+
+    </div>
+    <!-- Optional JavaScript -->
+    <script>
+      function initMap() {
+        var options = {
+          zoom: 10,
+          center: {lat:37.7749,lng:-122.4194},
+        }
+
+        var map = new google.maps.Map(document.getElementById('map'), options);
+
+        google.maps.event.addListener(map, 'click', function(event){
+          addMarker({
+            coords: event.latLng
+          });
+        });
+
+        // var marker = new google.maps.Marker({
+        //   position: {lat:37.7749,lng:-122.4194},
+        //   map:map,
+        //   icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        // });
+        //
+        // var infoWindow = new google.maps.InfoWindow({
+        //   content:'<h1>San Francisco</h1>'
+        // });
+        //
+        // marker.addListener('click', function(){
+        //   infoWindow.open(map, marker);
+        // });
+
+        //array of markers
+        var markers = [
+          {
+            coords:{lat:37.7749,lng:-122.4194},
+            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+            content:'<h1>San Francisco</h1>',
+          },
+          {
+            coords:{lat:37.6547,lng:-122.4077},
+            iconImage: '',
+            content: '<h1>South San Francisco</h1>',
+          },
+          {
+            coords:{lat:37.6879,lng:-122.4702},
+            iconImage: '',
+            content: '<h1>Daly City</h1>',
+          }
+        ];
+
+        //loop through markers
+        for(var i=0; i<markers.length; i++){
+          addMarker(markers[i]);
+        }
+
+        // addMarker({
+        //   coords:{lat:37.7749,lng:-122.4194},
+        //   iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+        //   content:'<h1>San Francisco</h1>',
+        // });
+        // addMarker({
+        //   coords:{lat:37.6547,lng:-122.4077},
+        //   iconImage: '',
+        //   content: '<h1>South San Francisco</h1>',
+        // });
+        // addMarker({
+        //   coords:{lat:37.6879,lng:-122.4702},
+        //   iconImage: '',
+        //   content: '<h1>Daly City</h1>',
+        // });
+
+        //Add Marker function
+        function addMarker(props){
+          var marker = new google.maps.Marker({
+            position: props.coords,
+            map:map,
+            // icon: props.iconImage,
+          });
+          //checks for custom icon
+          if(props.iconImage){
+            //sets icon image
+            marker.setIcon(props.iconImage);
+          }
+
+          //checks for contents
+          if(props.content){
+            var infoWindow = new google.maps.InfoWindow({
+              content: props.content,
+            });
+          }
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+          });
+        }
+      }
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBijrLPdeTG2tU53cOxJWSqMfCvB-LYGyM&callback=initMap"
+    async defer></script>
+  </body>
+</html>
